@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
       this.errorMessage = 'Please correct the errors above.';
       return;
     }
+
     const storedUserData = localStorage.getItem('userData');
     let users;
 
@@ -75,12 +76,18 @@ export class LoginComponent implements OnInit {
       users = this.dummyUsers;
     }
 
-    const user = this.dummyUsers.find((u: { email: string; password: string; }) => u.email === this.email && u.password === this.password);
-    if (user) {
-      this.isLoggedIn = true;
-      this.errorMessage = '';
+    // const user = this.dummyUsers.find((u: { email: string; password: string; }) => u.email === this.email);
+
+    if (users) {
+      if (users.password === this.password) {
+        this.isLoggedIn = true;
+        this.errorMessage = '';
+      } else {
+        this.errorMessage = 'Incorrect password';
+        console.log(this.errorMessage);
+      }
     } else {
-      this.errorMessage = 'Invalid email or password.';
+      this.errorMessage = 'Invalid email.';
       console.log(this.errorMessage);
     }
   }
